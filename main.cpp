@@ -20,7 +20,8 @@ int main()
     ///////////////////////// TO-DO (1) //////////////////////////////
       /// Create your bookstore
       ///
-
+      // land of the gnomes
+      Bookstore gnomeocracy;
     /////////////////////// END-TO-DO (1) ////////////////////////////
 
 
@@ -28,7 +29,8 @@ int main()
       /// Now, let's pretend your bookstore is busy with several shoppers, each pushing a shopping cart filled with a bunch of books
       /// by using your store's makeShoppingCarts function to create a collection of shopping carts.
       ///
-
+      //Create shopping carts in
+      gnomeocracy.makeShoppingCarts();
     /////////////////////// END-TO-DO (2) ////////////////////////////
 
 
@@ -38,7 +40,7 @@ int main()
       /// each shopper, scan all the books in their shopping cart, print a receipt with an amount due, deduct the items bought from
       /// the store's inventory, and returns a collection of books sold.
       ///
-
+      std::set<std::string> booksSold = gnomeocracy.ringUpAllCustomers;
     /////////////////////// END-TO-DO (3) ////////////////////////////
 
 
@@ -49,7 +51,14 @@ int main()
       /// The store's managers have decided to stop selling Wild Mammals (ISBN: 9802161748), so remove this from the store's
       /// inventory.
       ///
+      
+      // Create invetory reference to book store
+      std::map<std::string, unsigned int>& invetory;
+      inventory = gnomeocracy.getInventory();
 
+      // Remeove Wild Mammals using built in erase feature 
+
+      inventory.erase("9802161748");
     /////////////////////// END-TO-DO (4) ////////////////////////////
 
 
@@ -57,6 +66,9 @@ int main()
       /// All the shoppers have now checkout out and it's late in the day.  Close your store, take inventory, and if you sold enough
       /// books to fall below your re-order threshold, order more by using your store's reorderItems function passing the
       /// collection of books sold.
+
+      // passin sold books into bookStore
+      gnomeocracy.reorderItems(booksSold);
 
     /////////////////////// END-TO-DO (5) ////////////////////////////
   }
