@@ -30,7 +30,7 @@ int main()
       /// by using your store's makeShoppingCarts function to create a collection of shopping carts.
       ///
       //Create shopping carts in
-      gnomeocracy.makeShoppingCarts();
+      auto shoppingCarts = gnomeocracy.makeShoppingCarts();
     /////////////////////// END-TO-DO (2) ////////////////////////////
 
 
@@ -40,7 +40,7 @@ int main()
       /// each shopper, scan all the books in their shopping cart, print a receipt with an amount due, deduct the items bought from
       /// the store's inventory, and returns a collection of books sold.
       ///
-      std::set<std::string> booksSold = gnomeocracy.ringUpAllCustomers;
+      std::set<std::string> booksSold = gnomeocracy.ringUpAllCustomers(shoppingCarts);
     /////////////////////// END-TO-DO (3) ////////////////////////////
 
 
@@ -53,8 +53,7 @@ int main()
       ///
       
       // Create invetory reference to book store
-      std::map<std::string, unsigned int>& invetory;
-      inventory = gnomeocracy.getInventory();
+      std::map<std::string, unsigned int> inventory = gnomeocracy.getInventory();
 
       // Remeove Wild Mammals using built in erase feature 
 

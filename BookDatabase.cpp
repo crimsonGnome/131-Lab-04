@@ -6,7 +6,8 @@
   #include <filesystem>
   #include <fstream>
 
-  "BookDatabase.hpp"
+  #include "Book.hpp"
+  #include "BookDatabase.hpp"
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
 
@@ -61,7 +62,7 @@ BookDatabase::BookDatabase( const std::string & filename )
     Book book;
     // Extract each line to form a book. loop through to the end of the list. 
     while(fin >> book){
-      _data.insert(book);
+      _data.insert({book.isbn(), book});
     }
 
 
@@ -88,6 +89,16 @@ BookDatabase::BookDatabase( const std::string & filename )
   /// search function find().
 
   // impleent size interface
-  _data.size();
+  Book * BookDatabase::find( const std::string & isbn ){
+    auto p = _data.find(isbn);
+    if(p != _data.end()){
+       return &p->second;
+    } else {
+      return nullptr;
+    }
+   
+  }
+
+  std::size_t BookDatabase::size() const { return _data.size(); }
 
 /////////////////////// END-TO-DO (3) ////////////////////////////
