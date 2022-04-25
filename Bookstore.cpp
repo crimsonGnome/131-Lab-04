@@ -141,7 +141,7 @@ Bookstore::BooksSold Bookstore::ringUpCustomer( const ShoppingCart & shoppingCar
         // if item i sin local store
         if(search != inventory.end() ){
           search->second--;
-          purchasedBooks.insert(search->first);
+          purchasedBooks.insert({p->first});
         }
       } else {
         std::cout << "\n" << "Book not found free of charge";
@@ -197,8 +197,10 @@ void Bookstore::reorderItems( BooksSold & todaysSales )
         // serach through worldWideDatabase
         book = worldWideBookDatabase.find(*i);
         if(book == nullptr){
+          std::cout << "\n" << "nullptr" << "}";
           std::cout << "\n" << "{" << *i << "}";
         } else {
+           std::cout << "\n" << "actual thing" << "}";
           std::cout << "\n" << "{" << *book << "}";
         }
         if(databaseQuantity == _inventoryDB.end()) {
