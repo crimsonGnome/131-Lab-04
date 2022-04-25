@@ -75,6 +75,7 @@ Bookstore::BooksSold Bookstore::ringUpAllCustomers( const ShoppingCarts & shoppi
 
     // Loop through 
     for(auto i = shoppingCarts.begin(); i != shoppingCarts.end(); ++i){
+      std::cout<< "\n" << i->first << "'s shopping cart contains:";
       todaysSales.merge(ringUpCustomer(i->second));
     }
   /////////////////////// END-TO-DO (3) ////////////////////////////
@@ -121,33 +122,30 @@ Bookstore::BooksSold Bookstore::ringUpCustomer( const ShoppingCart & shoppingCar
     Book * bookInfo;
 
     // 2 - For each book in the customer's shopping cart
-
+    
     for(auto p = shoppingCart.begin(); p != shoppingCart.end(); ++p ){
       // search for book in the database 
       bookInfo = worldWideBookDatabase.find(p->first);
       // if book exist
       if(bookInfo != nullptr){
-        std::cout << "\n" << *bookInfo;
+        std::cout << "\n	" << *bookInfo;
 
         // adding up total
         amountDue += bookInfo->price();
-        
-        // Get reference Inventory
-        std::map<std::string, unsigned int>& inventory = getInventory();
 
         // find book in inventory
-        auto search = inventory.find(bookInfo->isbn());
+        auto search = _inventoryDB.find(bookInfo->isbn());
 
         // if item i sin local store
-        if(search != inventory.end() ){
+        if(search != _inventoryDB.end() ){
           search->second--;
           purchasedBooks.insert({p->first});
         }
       } else {
-        std::cout << "\n" << "Book not found free of charge";
+        std::cout << "\n	" << std::quoted(p->first) << "not found, teh book is free!";
       }
     }
-    std::cout << "\n" << "-------------------------" << "\n" << amountDue << "\n";
+    std::cout << "\n 	" << "-------------------------" << "\n	" << amountDue << "\n";
     
   /////////////////////// END-TO-DO (4) ////////////////////////////
 
@@ -188,28 +186,26 @@ void Bookstore::reorderItems( BooksSold & todaysSales )
     
     // Declare Book pointer
     Book * book;
+    unsigned int p = 1;
 
     for(auto i = todaysSales.begin(); i != todaysSales.end(); ++i){
       auto databaseQuantity = _inventoryDB.find(*i);
-
       if(databaseQuantity == _inventoryDB.end() || databaseQuantity->second < REORDER_THRESHOLD){
-        
         // serach through worldWideDatabase
         book = worldWideBookDatabase.find(*i);
         if(book == nullptr){
-          std::cout << "\n" << "nullptr" << "}";
-          std::cout << "\n" << "{" << *i << "}";
+          std::cout << "\n"<< p << ":  " << "{" << *i << "}";
         } else {
-           std::cout << "\n" << "actual thing" << "}";
-          std::cout << "\n" << "{" << *book << "}";
+          std::cout << "\n"<< p << ":  " << "{" << *book << "}";
         }
         if(databaseQuantity == _inventoryDB.end()) {
-          std::cout << "\n*** no longer sold in this store and will not be re-orderded\n";
+          std::cout << "\n        *** no longer sold in this store and will not be re-orderded\n";
         } else {
-          std::cout << "\n" << "only " << databaseQuantity->second << " remain in stock which is " << REORDER_THRESHOLD - databaseQuantity->second <<" below reorder threshold ("
+          std::cout << "\n        " << "only " << databaseQuantity->second << " remain in stock which is " << REORDER_THRESHOLD - databaseQuantity->second <<" below reorder threshold ("
                     <<  REORDER_THRESHOLD << "), re-ordering " << LOT_COUNT << " more\n";
           databaseQuantity->second += LOT_COUNT; 
         }
+        ++p;
       }
     }
 

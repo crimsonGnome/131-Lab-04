@@ -52,12 +52,9 @@ int main()
       /// inventory.
       ///
       
-      // Create invetory reference to book store
-      std::map<std::string, unsigned int> inventory = gnomeocracy.getInventory();
-
       // Remeove Wild Mammals using built in erase feature 
 
-      inventory.erase("9802161748");
+      gnomeocracy.getInventory().erase("9802161748");
     /////////////////////// END-TO-DO (4) ////////////////////////////
 
 
