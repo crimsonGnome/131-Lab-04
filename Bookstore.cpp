@@ -145,7 +145,7 @@ Bookstore::BooksSold Bookstore::ringUpCustomer( const ShoppingCart & shoppingCar
         std::cout << "\n	" << std::quoted(p->first) << "not found, teh book is free!";
       }
     }
-    std::cout << "\n 	" << "-------------------------" << "\n	" << amountDue << "\n";
+    std::cout << "\n 	" << "-------------------------" << "\n	Total  $" << amountDue << "\n";
     
   /////////////////////// END-TO-DO (4) ////////////////////////////
 
@@ -188,12 +188,16 @@ void Bookstore::reorderItems( BooksSold & todaysSales )
     Book * book;
     unsigned int p = 1;
 
+    std::cout << "\n\n\n\nRe-ordering books the store is running low on.\n";
+
     for(auto i = todaysSales.begin(); i != todaysSales.end(); ++i){
       auto databaseQuantity = _inventoryDB.find(*i);
       if(databaseQuantity == _inventoryDB.end() || databaseQuantity->second < REORDER_THRESHOLD){
         // serach through worldWideDatabase
         book = worldWideBookDatabase.find(*i);
+        // book doesnt exist
         if(book == nullptr){
+          
           std::cout << "\n"<< p << ":  " << "{" << *i << "}";
         } else {
           std::cout << "\n"<< p << ":  " << "{" << *book << "}";
